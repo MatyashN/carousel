@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<style>
+		body {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			margin: 0px;
+			background-color: rgba(152, 137, 137, 0.34);
+		}
+		#wrapper{
+			width: 500px;
+		    height: 155px;
+			position: absolute;
+		    top: 0;
+		    left: 0;
+		    bottom: 0;
+		    right: 0;
+		    margin: auto;
+		}
+		#box{
+		    width: 390px;
+		    overflow: hidden;
+		    margin: auto;
+		    border-radius: 105px;
+		    -webkit-box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+       			-moz-box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+            		box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+    		-webkit-box-shadow: 0 15px 10px -10px rgba(0, 0, 0, 0.5), 0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+       			-moz-box-shadow: 0 15px 10px -10px rgba(0, 0, 0, 0.5), 0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+            		box-shadow: 0 15px 10px -10px rgba(0, 0, 0, 0.5), 0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+		}
+		#wrapper ul {
+    		width: 9999px;
+    		margin: 0px;
+    		padding: 10px;
+    		font-size: 0px;
+    		padding: 0px;
+    		height: 130px;
+		}
+		#box li {
+			display: block;
+			width: 130px;
+			height: 130px;
+			float: left;
+		}
+		#box img {
+			height: 130px;
+		}
+		.button{
+		    background-size: 35px;
+		    width: 35px;
+		    height: 35px;
+		    position: absolute;
+		    top: 60px;
+		    opacity: 0.9;
+		    cursor: pointer;
+		}
+		#preButton{
+			background: url('arrowLeft.png') no-repeat;
+			background-size: 35px;
+			left: -10px;
+		}
+		#nextButton{
+			background: url('arrowRight.png') no-repeat;
+			background-size: 35px;
+			right: -10px;
+		}
+		#nextButton:hover{
+			background: url('arrowRightHover.png') no-repeat;
+			background-size: 35px;
+		}
+		#preButton:hover{
+			background: url('arrowLeftHover.png') no-repeat;
+			background-size: 35px;
+		}
+		.animBut {
+		    width: 60px;
+		    height: 35px;
+		    text-align: center;
+		    line-height: 35px;
+		    position: absolute;
+		    top: 150px;
+		    opacity: 0.9;
+		    background-color: #CDC5C5;
+		    border-radius: 10px;
+		    border: 1px solid grey;
+		    color: #4C4136;
+		    box-shadow: 0 15px 10px -10px rgba(0, 0, 0, 0.5), 0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+		    cursor: pointer;
+		}
+		#button1{
+			left: 120px;
+		}
+		#button2{
+			right: 120px;
+		}
+
+	</style>
+
+	<div id="wrapper">
+		<div id="box">
+			<ul id="list">
+				<li>
+					<img src="1.png" alt=""></li>
+				<li>
+					<img src="2.png" alt=""></li>
+				<li>
+					<img src="3.png" alt=""></li>
+				<li>
+					<img src="4.png" alt=""></li>
+				<li>
+					<img src="5.png" alt=""></li>
+				<li>
+					<img src="6.png" alt=""></li>
+				<li>
+					<img src="7.png" alt=""></li>
+				<li>
+					<img src="8.png" alt=""></li>
+				<li>
+					<img src="9.png" alt=""></li>
+				<li>
+					<img src="10.png" alt=""></li>
+			</ul>
+		</div>
+		<div id="preButton" class="button"></div>
+		<div id="nextButton" class="button"></div>
+		<div id="button1" class="animBut">Anim1</div>
+		<div id="button2" class="animBut">Anim2</div>
+	</div>
+
+	<script>
+// ############################################################################################
+		// плавное перелистывание
+
+		var liMass = box.querySelectorAll('li');
+		var quantityImg = box.querySelectorAll('li').length;
+		var widthImgs = 0;
+
+		window.onload = function(){
+			for (var i = 0; i < quantityImg; i++){
+					widthImgs += parseInt(getComputedStyle(liMass[i]).width)
+				}
+			box.querySelector('ul').style.width = widthImgs + 'px';
+		};
+
+		function smoothFlipping(){
+			var timeId;
+			nextButton.onclick = null;
+			preButton.onclick = null;
+			
+			if (parseInt(getComputedStyle(list).marginLeft) < 0){
+				var pos;
+				pos = -parseInt(getComputedStyle(list).marginLeft);
+				list.style.cssText="transition: margin-left 0ms; \
+  				";
+				list.style.width = widthImgs + 'px';
+				list.style.marginLeft = '0px';
+				box.scrollLeft = pos;
+			};
+
+			button1.style.cssText="  left: 120px; \
+								    top: 160px; \
+								    width: 50px; \
+								    height: 30px; \
+								    line-height: 30px; \
+								    font-size: 13px; \
+								    box-shadow: 0 10px 10px -10px rgba(0, 0, 0, 0.5), 0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset; \
+								    background-color: #BCB6B6; \
+								    color: #EBF0EB; \
+								    transition: 150ms; \
+  				";
+  			button2.style.cssText="transition: 150ms; \
+  			";
+
+			nextButton.onmousedown = function(){
+				return timeId = setInterval(function(){box.scrollLeft += 5;}, 10)
+			};
+			preButton.onmousedown = function(){
+				return timeId = setInterval(function(){box.scrollLeft -= 5}, 10)
+			};
+			box.onmouseover = function(){
+				clearInterval(timeId)
+			};
+			document.body.onmouseover = function(){
+				clearInterval(timeId)
+			};
+			nextButton.onmouseup = function(){
+				clearInterval(timeId)
+			};
+			preButton.onmouseup = function(){
+				clearInterval(timeId)
+			};
+		};
+
+// ############################################################################################
+		// перелистывает по три элемента
+		var width = 130;
+		count = 3;
+		var position = 0;
+ 
+		function threeElementsFlipping(){
+			nextButton.onmousedown = null;
+			preButton.onmousedown = null;
+			box.onmouseover = null;
+			document.body.onmouseover = null;
+			nextButton.onmouseup = null;
+			preButton.onmouseup = null;
+
+			list.style.transition = '0ms';
+			
+			if(box.scrollLeft > 0){
+				position = -Math.round(box.scrollLeft/width) * width;
+	  			list.style.marginLeft = position + 'px';
+	  			box.scrollLeft = 0;
+			};
+			list.style.transition = '500ms';
+
+			button2.style.cssText="  right: 120px; \
+								    top: 160px; \
+								    width: 50px; \
+								    height: 30px; \
+								    line-height: 30px; \
+								    font-size: 13px; \
+								    box-shadow: 0 10px 10px -10px rgba(0, 0, 0, 0.5), 0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset; \
+								    background-color: #BCB6B6; \
+								    color: #EBF0EB; \
+								    transition: 150ms; \
+  				";
+  			button1.style.cssText="transition: 150ms; \
+  			";
+
+			nextButton.onclick = function(){
+				position = Math.max((position - width * count), (- width * (quantityImg - count)));
+				list.style.marginLeft = position + 'px'
+			};
+			preButton.onclick = function(){
+				position = Math.min(position + width * count, 0)
+				list.style.marginLeft = position + 'px'
+			};
+		};
+
+// ##################################################################################################	
+		smoothFlipping();
+		button1.onclick = smoothFlipping;
+		button2.onclick = threeElementsFlipping;
+		
+
+
+
+
+		/*var clone;
+		var count = 0;
+		clone = liMass[0].cloneNode(true);
+		list.insertBefore(clone, liMass[0]);
+		
+		function makeCounter() {
+		  var currentCount = 0;
+		  return {
+		    getNext: function() {
+		      return currentCount++;
+		    },
+		    getPrev: function() {
+		      return currentCount--;
+		    },
+		    get: function() {
+		      return currentCount;
+		    },
+		    reset: function() {
+		      return currentCount = 0;
+		    },
+		    set: function(value){
+		      return currentCount = value;
+		    }
+		  };
+		};
+		var counter = makeCounter();
+
+
+		function rightLooping(){
+			i = counter.getNext();
+			if (counter.get() == quantityImg){counter.reset()};
+			list.appendChild(liMass[i]);
+			var newClone = liMass[i].cloneNode(true);
+			var oldClone = clone;
+			list.replaceChild(newClone, oldClone);
+			clone = newClone;
+			return clone;
+		};
+
+		function leftLooping(){
+			i = counter.getPrev();
+			if (counter.get() < 0){counter.set(quantityImg - 1)};
+			list.insertBefore(liMass[i], liMass[i + 1]);
+			var oldClone = liMass[i].cloneNode(true);
+			var newClone = clone;
+			list.replaceChild(newClone, oldClone);
+			clone = oldClone;
+			return clone;
+		};*/
+
+	</script>
+	</body>
+</html>
